@@ -1,19 +1,46 @@
 import * as React from 'react';
-import './App.css';
+import { Header } from './components/Header';
+import { Main } from './components/Main';
+import { Terminal } from './components/Terminal';
 
-const logo = require('./logo.svg');
+const styles = require('./App.css');
 
-class App extends React.Component {
+const DEFAULT_COMMANDS = [
+  'github',
+  'sns',
+  'works',
+  'help'
+];
+
+interface State {
+  commands: string[];
+}
+
+class App extends React.Component<{}, State> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      commands: DEFAULT_COMMANDS
+    };
+    this.onExec = this.onExec.bind(this);
+    this.onClear = this.onClear.bind(this);
+  }
+
+  onExec(command: string) {
+    this.setState((state) => state.commands.push(command));
+  }
+
+  onClear() {
+    this.setState({ commands: [] });
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <div className={styles.app}>
+        <Header />
+        <Main>
+          <Terminal commands={this.state.commands} onExec={this.onExec} onClear={this.onClear} />
+        </Main>
       </div>
     );
   }
