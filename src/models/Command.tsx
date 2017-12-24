@@ -1,8 +1,10 @@
 import * as React from 'react';
 
+type Executable = null | String | JSX.Element;
+
 interface Command {
     name: string;
-    exec(args: string[]): String | JSX.Element;
+    exec(args: string[]): Executable;
 }
 
 class CommandSet {
@@ -105,7 +107,7 @@ class UserInput {
         this.value = value;
     }
 
-    exec(): String | JSX.Element | null {
+    exec(): Executable {
         if (!this.value) {
             return null;
         }
@@ -118,4 +120,4 @@ class UserInput {
     }
 }
 
-export { Command, UserInput, CommandSet };
+export { Command, UserInput, CommandSet, Executable };
