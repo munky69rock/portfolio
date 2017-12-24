@@ -2,8 +2,6 @@ import * as React from 'react';
 import { UserInput } from '../models/Command';
 import { CommandLine } from './CommandLine';
 
-const styles = require('./Terminal.css');
-
 interface Props {
     commands: string[];
     onExec(command: string): void;
@@ -13,7 +11,7 @@ interface Props {
 class Terminal extends React.Component<Props, object> {
     render() {
         return (
-            <div className={styles.terminal}>
+            <div>
                 {this.props.commands.map(name => new UserInput(name)).map((input, i) => {
                     return <CommandLine
                         key={i}

@@ -1,11 +1,11 @@
 .header {
-    text-align: left;
-    border-bottom: 1px solid #000;
+  text-align: left;
+  border-bottom: 1px solid #000;
 }
 
 .title {
-    margin-left: .5rem;
-    margin-top: .25rem;
-    margin-bottom: .25rem;
-    font-size: 1rem;
+  margin-left: .5rem;
+  margin-top: .25rem;
+  margin-bottom: .25rem;
+  font-size: 1rem;
 }

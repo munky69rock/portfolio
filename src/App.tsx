@@ -3,8 +3,6 @@ import { Header } from './components/Header';
 import { Main } from './components/Main';
 import { Terminal } from './components/Terminal';
 
-const styles = require('./App.css');
-
 const DEFAULT_COMMANDS = [
   'github',
   'sns',
@@ -27,7 +25,10 @@ class App extends React.Component<{}, State> {
   }
 
   onExec(command: string) {
-    this.setState((state) => state.commands.push(command));
+    this.setState((state) => {
+      state.commands.push(command);
+      return state;
+    });
   }
 
   onClear() {
@@ -36,7 +37,7 @@ class App extends React.Component<{}, State> {
 
   render() {
     return (
-      <div className={styles.app}>
+      <div>
         <Header />
         <Main>
           <Terminal commands={this.state.commands} onExec={this.onExec} onClear={this.onClear} />
