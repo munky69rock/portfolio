@@ -38,6 +38,11 @@ class CommandLine extends React.Component<Props, State> {
     }
 
     handleKeyEvent(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            // TODO: tab-completion
+            return;
+        }
         if (event.ctrlKey && event.key === 'l') {
             this.props.onClear();
         }
