@@ -62,7 +62,7 @@ CommandSet.instance.addAll([
     {
         name: 'help',
         exec(): string {
-            return `available commands: ${CommandSet.instance.allNames().join(' ')}`;
+            return `available commands:\n ${CommandSet.instance.allNames().join(', ')}`;
         }
     },
     {
@@ -94,6 +94,16 @@ CommandSet.instance.addAll([
             return (
                 <div>
                     <a href="https://mnist.mentai.co">mnist.mentai.co</a>
+                </div>
+            );
+        }
+    },
+    {
+        name: 'mail',
+        exec(): JSX.Element {
+            return (
+                <div>
+                    <a href="mailto:munky69rock@gmail.com">munky69rock@gmail.com</a>
                 </div>
             );
         }
