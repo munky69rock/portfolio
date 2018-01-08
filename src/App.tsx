@@ -4,9 +4,11 @@ import { Main } from './components/Main';
 import { Terminal } from './components/Terminal';
 
 const DEFAULT_COMMANDS = [
+  'whoami',
   'github',
   'sns',
   'works',
+  'contact',
   'help'
 ];
 

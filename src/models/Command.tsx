@@ -62,7 +62,24 @@ CommandSet.instance.addAll([
     {
         name: 'help',
         exec(): string {
-            return `available commands:\n ${CommandSet.instance.allNames().join(', ')}`;
+            return `available commands: ${CommandSet.instance.allNames().join(', ')}`;
+        }
+    },
+    {
+        name: 'whoami',
+        exec(): JSX.Element {
+            const plainTextStyle = { margin: '0 0 .25rem' };
+            const indentedTextStyle = { margin: '0 0 .25rem 1rem' };
+            return (
+                <div>
+                    <p style={plainTextStyle}>Name: Masayuki Uehara</p>
+                    <p style={plainTextStyle}>Title: Freelance Engineer (Frontend, Backend,
+                        Native App(iOS, Android), Deep Learning etc...)</p>
+                    <p style={plainTextStyle}>Specs:</p>
+                    <p style={indentedTextStyle}>Languages: Ruby, Python, Perl, JavaScript, Swift, Java etc...</p>
+                    <p style={indentedTextStyle}>Other Stacks: git, vim, MySQL, PostgreSQL, AWS etc...</p>
+                </div>
+            );
         }
     },
     {
@@ -99,7 +116,7 @@ CommandSet.instance.addAll([
         }
     },
     {
-        name: 'mail',
+        name: 'contact',
         exec(): JSX.Element {
             return (
                 <div>
