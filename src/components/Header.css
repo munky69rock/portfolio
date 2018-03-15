@@ -1,11 +1,13 @@
 .header {
   text-align: left;
+  box-sizing: border-box;
   border-bottom: 1px solid #000;
+  padding-left: .5rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
 }
 
 .title {
-  margin-left: .5rem;
-  margin-top: .25rem;
-  margin-bottom: .25rem;
+  margin: 0;
   font-size: 1rem;
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Header } from './components/Header';
 import { Main } from './components/Main';
 import { Terminal } from './components/Terminal';
+const styles = require('./App.css');
 
 const DEFAULT_COMMANDS = [
   'whoami',
@@ -24,6 +25,7 @@ class App extends React.Component<{}, State> {
     };
     this.onExec = this.onExec.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onExec(command: string) {
@@ -37,9 +39,18 @@ class App extends React.Component<{}, State> {
     this.setState({ commands: [] });
   }
 
+  onClick() {
+    const selection = window.getSelection();
+    if (selection.type !== 'Range') {
+        const inputs = document.querySelectorAll('input');
+        const latestInput = inputs[inputs.length - 1] as HTMLInputElement;
+        latestInput.focus();
+    }
+  }
+
   render() {
     return (
-      <div>
+      <div onClick={this.onClick} className={styles.app}>
         <Header />
         <Main>
           <Terminal commands={this.state.commands} onExec={this.onExec} onClear={this.onClear} />
