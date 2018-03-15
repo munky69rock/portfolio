@@ -3,7 +3,7 @@ import { CommandSet, Executable } from './Command';
 /* tslint:disable:no-console */
 class ConsoleApp {
     start() {
-        console.log('%cWelcome to MUNKY69ROCK site.', 'font-weight: bold;');
+        console.log('%cWelcome to MUNKY.WORK site.', 'font-weight: bold;');
         console.log('Enter commands:');
         CommandSet.instance.all().forEach(command => {
             if (window[command.name]) {

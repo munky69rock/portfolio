@@ -110,7 +110,7 @@ CommandSet.instance.addAll([
         exec(): JSX.Element {
             return (
                 <div>
-                    <a href="https://mnist.mentai.co">mnist.mentai.co</a>
+                    <a href="https://mnist.munky.work">mnist.munky.work</a>
                 </div>
             );
         }
