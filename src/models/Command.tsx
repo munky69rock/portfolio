@@ -77,7 +77,7 @@ CommandSet.instance.addAll([
                         Native App(iOS, Android), Deep Learning etc...)</p>
                     <p style={plainTextStyle}>Specs:</p>
                     <p style={indentedTextStyle}>Languages: Ruby, Python, Perl, JavaScript, Swift, Java etc...</p>
-                    <p style={indentedTextStyle}>Other Stacks: git, vim, MySQL, PostgreSQL, AWS etc...</p>
+                    <p style={indentedTextStyle}>Other Stacks: git, vim, MySQL, PostgreSQL, Docker, AWS etc...</p>
                 </div>
             );
         }
