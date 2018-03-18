@@ -3,116 +3,35 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "autoprefixer": "7.1.2",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
-    "chalk": "1.1.3",
-    "css-loader": "0.28.4",
-    "dotenv": "4.0.0",
-    "extract-text-webpack-plugin": "3.0.0",
-    "file-loader": "0.11.2",
-    "fs-extra": "3.0.1",
-    "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
-    "object-assign": "4.1.1",
-    "postcss-flexbugs-fixes": "3.2.0",
-    "postcss-loader": "2.0.6",
-    "promise": "8.0.1",
     "react": "^16.2.0",
-    "react-dev-utils": "^4.0.1",
     "react-dom": "^16.2.0",
-    "source-map-loader": "^0.2.1",
-    "style-loader": "0.18.2",
-    "sw-precache-webpack-plugin": "0.11.4",
-    "ts-jest": "^20.0.7",
-    "ts-loader": "^2.3.7",
-    "tslint": "^5.7.0",
-    "tslint-loader": "^3.5.3",
-    "tslint-react": "^3.2.0",
-    "typescript": "~2.5.3",
-    "url-loader": "0.5.9",
-    "webpack": "3.5.1",
-    "webpack-dev-server": "2.7.1",
-    "webpack-manifest-plugin": "1.2.1",
-    "whatwg-fetch": "2.0.3"
+    "react-scripts-ts": "2.14.0"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.8",
-    "@types/node": "^8.0.53",
-    "@types/react": "^16.0.25",
-    "@types/react-dom": "^16.0.3",
-    "node-sass": "^4.7.2",
-    "prettier": "1.11.1",
+    "@types/jest": "^22.2.0",
+    "@types/node": "^9.4.7",
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
     "prettier-stylelint": "^0.4.2",
-    "prettier-tslint": "^0.3.0",
-    "sass-loader": "^6.0.6",
-    "stylelint": "~9.1.3",
+    "stylelint": "^9.1.3",
     "stylelint-config-prettier": "^3.0.4",
-    "stylelint-config-standard": "^18.0.0",
+    "stylelint-config-standard": "^18.2.0",
     "tslint-config-prettier": "^1.10.0",
-    "tslint-plugin-prettier": "^1.3.0"
+    "tslint-plugin-prettier": "^1.3.0",
+    "typescript": "^2.7.2"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+
     "lint": "yarn run tslint && yarn run prettier-stylelint && yarn run stylelint",
     "prettier-tslint": "prettier-tslint fix '**/*.ts{,x}'",
     "tslint": "tslint -p tsconfig.json -c tslint.json --fix 'src/**/*.ts{,x}'",
     "prettier-stylelint": "prettier-stylelint -q --write 'src/**/*.{,s}css'",
     "stylelint": "stylelint 'src/**/*.css' --fix",
+    
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "stylelint-check": "stylelint-config-prettier-check",
-    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}"
-  },
-  "jest": {
-    "mapCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "web.js",
-      "js",
-      "web.jsx",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "/Users/uehara.masayuki/.ghq/github.com/munky69rock/munky69rock.github.io/tsconfig.test.json"
-      }
-    }
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "prettier": {
-    "parser": "typescript"
+    "stylelint-check": "stylelint-config-prettier-check"
   }
 }

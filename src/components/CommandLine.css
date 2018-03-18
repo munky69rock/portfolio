@@ -1,18 +1,18 @@
-.prompt {
+.Prompt {
   margin-right: 0.5rem;
 }
 
-.commandLine {
+.CommandLine {
   display: flex;
   margin-bottom: 0.25rem;
 }
 
-.resultArea {
+.ResultArea {
   display: flex;
   margin-bottom: 0.25rem;
 }
 
-.resultArea a {
+.ResultArea a {
   margin-right: 0.5rem;
 }
 

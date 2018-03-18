@@ -2,7 +2,7 @@ import * as React from "react";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Terminal } from "./components/Terminal";
-const styles = require("./App.css");
+import "./App.css";
 
 const DEFAULT_COMMANDS = [
   "whoami",
@@ -50,7 +50,7 @@ class App extends React.Component<{}, State> {
 
   render() {
     return (
-      <div onClick={this.onClick} className={styles.app}>
+      <div onClick={this.onClick} className="App">
         <Header />
         <Main>
           <Terminal

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { UserInput } from "../models/Command";
-
-const styles = require("./CommandLine.css");
+import "./CommandLine.css";
 
 interface Props {
   input: UserInput;
@@ -54,8 +53,8 @@ class CommandLine extends React.Component<Props, State> {
     const result = isExecuted ? input.exec() : "";
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className={styles.commandLine}>
-          <span className={styles.prompt}>$</span>
+        <div className="CommandLine">
+          <span className="Prompt">$</span>
           <input
             type="text"
             value={this.state.value}
@@ -65,7 +64,7 @@ class CommandLine extends React.Component<Props, State> {
             autoFocus={!isExecuted}
           />
         </div>
-        {result && <div className={styles.resultArea}>{result}</div>}
+        {result && <div className="ResultArea">{result}</div>}
       </form>
     );
   }

@@ -1,12 +1,12 @@
 import * as React from "react";
 const packageJson = require("../../package.json");
-const styles = require("./Header.css");
+import "./Header.css";
 
 class Header extends React.Component {
   render() {
     return (
-      <header className={styles.header}>
-        <h1 className={styles.title}>
+      <header className="Header">
+        <h1 className="Title">
           MUNKY.WORK <small>{packageJson.version}</small>
         </h1>
       </header>
