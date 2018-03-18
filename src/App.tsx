@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { Header } from './components/Header';
-import { Main } from './components/Main';
-import { Terminal } from './components/Terminal';
-const styles = require('./App.css');
+import * as React from "react";
+import { Header } from "./components/Header";
+import { Main } from "./components/Main";
+import { Terminal } from "./components/Terminal";
+const styles = require("./App.css");
 
 const DEFAULT_COMMANDS = [
-  'whoami',
-  'github',
-  'sns',
-  'works',
-  'contact',
-  'help'
+  "whoami",
+  "github",
+  "sns",
+  "works",
+  "contact",
+  "help"
 ];
 
 interface State {
@@ -29,7 +29,7 @@ class App extends React.Component<{}, State> {
   }
 
   onExec(command: string) {
-    this.setState((state) => {
+    this.setState(state => {
       state.commands.push(command);
       return state;
     });
@@ -41,10 +41,10 @@ class App extends React.Component<{}, State> {
 
   onClick() {
     const selection = window.getSelection();
-    if (selection.type !== 'Range') {
-        const inputs = document.querySelectorAll('input');
-        const latestInput = inputs[inputs.length - 1] as HTMLInputElement;
-        latestInput.focus();
+    if (selection.type !== "Range") {
+      const inputs = document.querySelectorAll("input");
+      const latestInput = inputs[inputs.length - 1] as HTMLInputElement;
+      latestInput.focus();
     }
   }
 
@@ -53,7 +53,11 @@ class App extends React.Component<{}, State> {
       <div onClick={this.onClick} className={styles.app}>
         <Header />
         <Main>
-          <Terminal commands={this.state.commands} onExec={this.onExec} onClear={this.onClear} />
+          <Terminal
+            commands={this.state.commands}
+            onExec={this.onExec}
+            onClear={this.onClear}
+          />
         </Main>
       </div>
     );

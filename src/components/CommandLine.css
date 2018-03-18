@@ -1,19 +1,19 @@
 .prompt {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .commandLine {
   display: flex;
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
 .resultArea {
   display: flex;
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
 .resultArea a {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 input {

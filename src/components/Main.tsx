@@ -1,15 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 
-const styles = require('./Main.css');
+const styles = require("./Main.css");
 
 class Main extends React.Component {
-    render() {
-        return (
-            <main className={styles.main}>
-                {this.props.children}
-            </main>
-        );
-    }
+  render() {
+    return <main className={styles.main}>{this.props.children}</main>;
+  }
 }
 
 export { Main };

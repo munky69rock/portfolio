@@ -1,6 +1,7 @@
 {
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "number-leading-zero": "never"
-  }
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
+  "rules": {}
 }
