@@ -79,7 +79,8 @@ CommandSet.instance.addAll([
           </p>
           <p style={plainTextStyle}>Specs:</p>
           <p style={indentedTextStyle}>
-            Languages: Ruby, Python, Perl, JavaScript, Swift, Java etc...
+            Languages: Ruby, Python, Perl, JavaScript, Swift, Java, Solidity
+            etc...
           </p>
           <p style={indentedTextStyle}>
             Other Stacks: git, vim, MySQL, PostgreSQL, Docker, AWS etc...
@@ -117,6 +118,7 @@ CommandSet.instance.addAll([
       return (
         <div>
           <a href="https://mnist.munky.work">mnist.munky.work</a>
+          <a href="https://ethereum-cv.munky.work">ethereum-cv.munky.work</a>
         </div>
       );
     }
