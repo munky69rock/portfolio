@@ -4,8 +4,18 @@ type Executable = null | String | JSX.Element;
 
 interface Command {
   name: string;
+  alias?: string[];
   exec(args: string[]): Executable;
 }
+
+const PlainText = (props: { children: {}; indent?: number }) => {
+  const { children, indent } = props;
+  const style = { margin: "0 0 .25rem" };
+  if (indent && indent > 0) {
+    style.margin += ` ${indent}rem`;
+  }
+  return <p style={style}>{children}</p>;
+};
 
 class CommandSet {
   private static _instance: CommandSet;
@@ -40,51 +50,48 @@ class CommandSet {
   }
 
   add(command: Command) {
-    if (!this.commands) {
-      this.commands = {
-        [command.name]: command
-      };
-    } else {
-      this.commands[command.name] = command;
+    this.commands[command.name] = command;
+    if (command.alias) {
+      command.alias.forEach(name => (this.commands[name] = command));
     }
   }
 
-  private constructor() {}
+  private constructor() {
+    this.commands = {};
+  }
 }
 
 CommandSet.instance.addAll([
   {
-    name: "ls",
-    exec(): string {
-      return ".";
-    }
-  },
-  {
     name: "help",
-    exec(): string {
-      return `available commands: ${CommandSet.instance.allNames().join(", ")}`;
+    exec(): JSX.Element {
+      return (
+        <div>
+          <PlainText>
+            Available commands: {CommandSet.instance.allNames().join(", ")}
+          </PlainText>
+          <PlainText>Try👇</PlainText>
+        </div>
+      );
     }
   },
   {
     name: "whoami",
     exec(): JSX.Element {
-      const plainTextStyle = { margin: "0 0 .25rem" };
-      const indentedTextStyle = { margin: "0 0 .25rem 1rem" };
       return (
         <div>
-          <p style={plainTextStyle}>Name: Masayuki Uehara</p>
-          <p style={plainTextStyle}>
-            Title: Freelance Engineer (Frontend, Backend, Native App(iOS,
-            Android), Deep Learning etc...)
-          </p>
-          <p style={plainTextStyle}>Specs:</p>
-          <p style={indentedTextStyle}>
-            Languages: Ruby, Python, Perl, JavaScript, Swift, Java, Solidity
-            etc...
-          </p>
-          <p style={indentedTextStyle}>
-            Other Stacks: git, vim, MySQL, PostgreSQL, Docker, AWS etc...
-          </p>
+          <PlainText>Name: Masayuki Uehara</PlainText>
+          <PlainText>
+            Title: Freelance Web Engineer<br />
+          </PlainText>
+          <PlainText indent={1}>
+            Frontend, Backend, Native App(iOS, Android), Deep Learning etc...
+          </PlainText>
+          <PlainText>Skills:</PlainText>
+          <PlainText indent={1}>
+            Ruby, Python, Perl, JavaScript, TypeScript, Swift, Java,<br />
+            Solidity, React, MySQL, PostgreSQL, Docker, AWS etc...
+          </PlainText>
         </div>
       );
     }
@@ -100,25 +107,41 @@ CommandSet.instance.addAll([
     }
   },
   {
-    name: "sns",
+    name: "links",
     exec(): JSX.Element {
       return (
         <div>
-          <a href="https://twitter.com/munky69rock">twitter</a>
-          <a href="https://www.facebook.com/munky69rock">facebook</a>
-          <a href="https://qiita.com/munky69rock">qiita</a>
-          <a href="https://www.wantedly.com/users/16629">wantedly</a>
+          <PlainText>
+            <a href="https://twitter.com/munky69rock">twitter</a>
+          </PlainText>
+          <PlainText>
+            <a href="https://www.facebook.com/munky69rock">facebook</a>
+          </PlainText>
+          <PlainText>
+            <a href="https://qiita.com/munky69rock">qiita</a>
+          </PlainText>
+          <PlainText>
+            <a href="https://www.wantedly.com/users/16629">wantedly</a>
+          </PlainText>
         </div>
       );
     }
   },
   {
-    name: "works",
+    name: "ls",
+    alias: ["works"],
     exec(): JSX.Element {
       return (
         <div>
-          <a href="https://mnist.munky.work">mnist.munky.work</a>
-          <a href="https://ethereum-cv.munky.work">ethereum-cv.munky.work</a>
+          <PlainText>
+            <a href="https://munky.work" target="_blank">https://munky.work</a>
+          </PlainText>
+          <PlainText>
+            <a href="https://mnist.munky.work" target="_blank">https://mnist.munky.work</a>
+          </PlainText>
+          <PlainText>
+            <a href="https://ethereum-cv.munky.work" target="_blank">https://ethereum-cv.munky.work</a>
+          </PlainText>
         </div>
       );
     }

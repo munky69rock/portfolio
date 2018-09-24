@@ -2,9 +2,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  color: #ccc;
+  background-color: #222;
 }
 
 input {
   font-family: "VT323", monospace;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  color: #eee;
+  background-color: #222;
+}
+
+a {
+  color: #fff;
+}
+a:hover {
+  color: #bbb;
+}
+a:focus,
+a:visited {
+  color: #ddd;
 }

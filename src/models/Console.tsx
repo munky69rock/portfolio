@@ -5,9 +5,10 @@ class ConsoleApp {
   start() {
     console.log("%cWelcome to MUNKY.WORK site.", "font-weight: bold;");
     console.log("Enter commands:");
-    CommandSet.instance.all().forEach(command => {
-      if (window[command.name]) {
-        console.log(`${command.name} is already assigned`);
+    CommandSet.instance.allNames().forEach(name => {
+      const command = CommandSet.instance.find(name)!;
+      if (window[name]) {
+        console.log(`'${name}' is already assigned`);
         return;
       }
       let result: Executable = command.exec([]);
