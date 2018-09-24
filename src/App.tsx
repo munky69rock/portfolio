@@ -7,7 +7,7 @@ import "./App.css";
 const DEFAULT_COMMANDS = [
   "whoami",
   "github",
-  "sns",
+  "links",
   "works",
   "contact",
   "help"
