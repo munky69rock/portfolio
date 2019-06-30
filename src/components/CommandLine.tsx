@@ -2,19 +2,19 @@ import * as React from "react";
 import { UserInput } from "../models/Command";
 import "./CommandLine.css";
 
-interface Props {
+interface IProps {
   input: UserInput;
-  isExecuted: boolean;
-  onExec(command: string): void;
+  isCalled: boolean;
+  onCall(command: string): void;
   onClear(): void;
 }
 
-interface State {
+interface IState {
   value: string;
 }
 
-class CommandLine extends React.Component<Props, State> {
-  constructor(props: Props) {
+class CommandLine extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = { value: this.props.input.value };
     this.handleChange = this.handleChange.bind(this);
@@ -31,7 +31,7 @@ class CommandLine extends React.Component<Props, State> {
     if (this.state.value === "clear") {
       this.props.onClear();
     } else {
-      this.props.onExec(this.state.value.replace(/^\s+|\s+$/, ""));
+      this.props.onCall(this.state.value.replace(/^\s+|\s+$/, ""));
     }
     this.setState({ value: "" });
   }
@@ -49,8 +49,8 @@ class CommandLine extends React.Component<Props, State> {
 
   render() {
     const input = this.props.input;
-    const isExecuted = this.props.isExecuted;
-    const result = isExecuted ? input.exec() : "";
+    const isCalled = this.props.isCalled;
+    const result = isCalled ? input.call() : "";
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="CommandLine">
@@ -58,10 +58,10 @@ class CommandLine extends React.Component<Props, State> {
           <input
             type="text"
             value={this.state.value}
-            readOnly={isExecuted}
+            readOnly={isCalled}
             onChange={this.handleChange}
             onKeyDown={this.handleKeyEvent}
-            autoFocus={!isExecuted}
+            autoFocus={!isCalled}
           />
         </div>
         {result && <div className="ResultArea">{result}</div>}

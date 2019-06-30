@@ -1,11 +1,14 @@
 import * as React from "react";
+import { Profile } from "./Profile";
+import { Links } from "./Link";
+import { FakeFiles } from "./File";
 
-type Executable = null | String | JSX.Element;
+type Callable = null | String | JSX.Element;
 
-interface Command {
+interface ICommand {
   name: string;
   alias?: string[];
-  exec(args: string[]): Executable;
+  call(args: string[]): Callable;
 }
 
 const PlainText = (props: { children: {}; indent?: number }) => {
@@ -17,58 +20,48 @@ const PlainText = (props: { children: {}; indent?: number }) => {
   return <p style={style}>{children}</p>;
 };
 
-class CommandSet {
-  private static _instance: CommandSet;
-  private commands: { [name: string]: Command };
+const normalizePath = (path: string): string => {
+  return path.replace(/^\.?\.\//, "");
+};
 
-  public static get instance(): CommandSet {
-    if (!this._instance) {
-      this._instance = new CommandSet();
+const CommandSet = (() => {
+  const commands = {} as { [name: string]: ICommand };
+
+  return {
+    all() {
+      return this.allNames().map(name => commands[name]);
+    },
+    allNames(): string[] {
+      return Object.keys(commands).sort();
+    },
+    find(command: string): ICommand | null {
+      if (command in commands) {
+        return commands[command];
+      }
+      return null;
+    },
+    addAll(newCommands: ICommand[]) {
+      newCommands.forEach((command: ICommand) => {
+        this.add(command);
+      });
+    },
+    add(command: ICommand) {
+      commands[command.name] = command;
+      if (command.alias) {
+        command.alias.forEach(name => (commands[name] = command));
+      }
     }
-    return this._instance;
-  }
+  };
+})();
 
-  all(): Command[] {
-    return this.allNames().map(name => this.commands[name]);
-  }
-
-  allNames(): string[] {
-    return Object.keys(this.commands).sort();
-  }
-
-  find(command: string): Command | null {
-    if (command in this.commands) {
-      return this.commands[command];
-    }
-    return null;
-  }
-
-  addAll(commands: Command[]) {
-    commands.forEach((command: Command) => {
-      this.add(command);
-    });
-  }
-
-  add(command: Command) {
-    this.commands[command.name] = command;
-    if (command.alias) {
-      command.alias.forEach(name => (this.commands[name] = command));
-    }
-  }
-
-  private constructor() {
-    this.commands = {};
-  }
-}
-
-CommandSet.instance.addAll([
+CommandSet.addAll([
   {
-    name: "help",
-    exec(): JSX.Element {
+    name: "welcome",
+    call(): JSX.Element {
       return (
         <div>
           <PlainText>
-            Available commands: {CommandSet.instance.allNames().join(", ")}
+            Available commands: {CommandSet.allNames().join(", ")}
           </PlainText>
           <PlainText>Try👇</PlainText>
         </div>
@@ -77,51 +70,45 @@ CommandSet.instance.addAll([
   },
   {
     name: "whoami",
-    exec(): JSX.Element {
+    call(): JSX.Element {
       return (
         <div>
-          <PlainText>Name: Masayuki Uehara</PlainText>
           <PlainText>
-            Title: Freelance Web Engineer<br />
+            <b>NAME</b>
+          </PlainText>
+          <PlainText indent={1}>{Profile.name}</PlainText>
+          <PlainText>
+            <b>TITLE</b>
           </PlainText>
           <PlainText indent={1}>
-            Frontend, Backend, Native App(iOS, Android), Deep Learning etc...
+            {Profile.title}{" "}
+            {Profile.company ? (
+              <React.Fragment>
+                @{" "}
+                <a href={Profile.companyUrl} target="_blank">
+                  {Profile.company}
+                </a>
+              </React.Fragment>
+            ) : null}
           </PlainText>
-          <PlainText>Skills:</PlainText>
           <PlainText indent={1}>
-            Ruby, Python, Perl, JavaScript, TypeScript, Swift, Java,<br />
-            Solidity, React, MySQL, PostgreSQL, Docker, AWS etc...
-          </PlainText>
-        </div>
-      );
-    }
-  },
-  {
-    name: "github",
-    exec(): JSX.Element {
-      return (
-        <div>
-          <a href="https://github.com/munky69rock">munky69rock</a>
-        </div>
-      );
-    }
-  },
-  {
-    name: "links",
-    exec(): JSX.Element {
-      return (
-        <div>
-          <PlainText>
-            <a href="https://twitter.com/munky69rock">twitter</a>
+            ({Profile.positions.join(", ")} etc...)
           </PlainText>
           <PlainText>
-            <a href="https://www.facebook.com/munky69rock">facebook</a>
+            <b>SKILLS</b>
           </PlainText>
-          <PlainText>
-            <a href="https://qiita.com/munky69rock">qiita</a>
-          </PlainText>
-          <PlainText>
-            <a href="https://www.wantedly.com/users/16629">wantedly</a>
+          <PlainText indent={1}>
+            {Profile.skills.map((skill, i) => {
+              const isLast = i !== Profile.skills.length - 1;
+              return (
+                <React.Fragment key={i}>
+                  {skill}
+                  {isLast ? ", " : ""}
+                  {i === 6 ? <br /> : null}
+                </React.Fragment>
+              );
+            })}{" "}
+            etc...
           </PlainText>
         </div>
       );
@@ -129,29 +116,84 @@ CommandSet.instance.addAll([
   },
   {
     name: "ls",
-    alias: ["works"],
-    exec(): JSX.Element {
-      return (
-        <div>
+    call(args: string[]): JSX.Element {
+      const path = args[0];
+      if (args.length === 0 || normalizePath(path) === ".") {
+        return (
+          <div>
+            <PlainText>{Links.values().map(l => l.toHTMLAnchor())}</PlainText>
+            <PlainText>
+              {FakeFiles.values().map((f, i) => (
+                <span style={{ marginRight: "8px" }} key={i}>
+                  {f.name}
+                </span>
+              ))}
+            </PlainText>
+          </div>
+        );
+      }
+
+      const target = normalizePath(path);
+      const link = Links.find(target);
+      if (link) {
+        return (
           <PlainText>
-            <a href="https://munky.work" target="_blank">https://munky.work</a>
+            <a
+              href={/@/.test(link.title) ? `mailto:${link.href}` : link.href}
+              target="_blank"
+            >
+              {link.href}
+            </a>
           </PlainText>
-          <PlainText>
-            <a href="https://mnist.munky.work" target="_blank">https://mnist.munky.work</a>
-          </PlainText>
-          <PlainText>
-            <a href="https://ethereum-cv.munky.work" target="_blank">https://ethereum-cv.munky.work</a>
-          </PlainText>
-        </div>
-      );
+        );
+      }
+      const file = FakeFiles.find(target);
+      if (file) {
+        return <PlainText>{file.name}</PlainText>;
+      }
+      return <PlainText>'{path}' not found.</PlainText>;
     }
   },
   {
-    name: "contact",
-    exec(): JSX.Element {
+    name: "cd",
+    call(args: string[]) {
+      const path = args[0];
+      if (!path) {
+        return <PlainText>No dirname Specified.</PlainText>;
+      }
+      const link = Links.find(normalizePath(path));
+      if (!link) {
+        return <PlainText>'{path}' not found.</PlainText>;
+      }
+      location.href = link.href;
+      return null;
+    }
+  },
+  {
+    name: "cat",
+    call(args: string[]): JSX.Element {
+      const path = args[0];
+      if (!path) {
+        return <PlainText>No filename Specified.</PlainText>;
+      }
+      const file = FakeFiles.find(normalizePath(path));
+      if (!file) {
+        return <PlainText>'{path}' not found.</PlainText>;
+      }
       return (
         <div>
-          <a href="mailto:munky69rock@gmail.com">munky69rock@gmail.com</a>
+          {file.content.split("\n").map((line, i) => {
+            return (
+              <PlainText key={i}>
+                <a
+                  href={/@/.test(line) ? `mailto:${line}` : line}
+                  target="_blank"
+                >
+                  {line}
+                </a>
+              </PlainText>
+            );
+          })}
         </div>
       );
     }
@@ -165,17 +207,25 @@ class UserInput {
     this.value = value;
   }
 
-  exec(): Executable {
+  call(): Callable {
     if (!this.value) {
       return null;
     }
     const [name, ...args] = this.value.split(/\s+/);
-    const command = CommandSet.instance.find(name);
+    const command = CommandSet.find(name);
     if (command == null) {
       return `command not found: ${name}`;
     }
-    return command.exec(args);
+    return command.call(args);
   }
 }
 
-export { Command, UserInput, CommandSet, Executable };
+const defaultCommands = [
+  "whoami",
+  "ls",
+  "cat ./works.txt",
+  "cat ./contact.txt",
+  "welcome"
+];
+
+export { ICommand, UserInput, CommandSet, Callable, defaultCommands };

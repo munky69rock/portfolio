@@ -2,33 +2,25 @@ import * as React from "react";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Terminal } from "./components/Terminal";
+import { defaultCommands } from "./models/Command";
 import "./App.css";
 
-const DEFAULT_COMMANDS = [
-  "whoami",
-  "github",
-  "links",
-  "works",
-  "contact",
-  "help"
-];
-
-interface State {
+interface IState {
   commands: string[];
 }
 
-class App extends React.Component<{}, State> {
+class App extends React.Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      commands: DEFAULT_COMMANDS
+      commands: defaultCommands
     };
-    this.onExec = this.onExec.bind(this);
+    this.onCall = this.onCall.bind(this);
     this.onClear = this.onClear.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  onExec(command: string) {
+  onCall(command: string) {
     this.setState(state => {
       state.commands.push(command);
       return state;
@@ -41,7 +33,7 @@ class App extends React.Component<{}, State> {
 
   onClick() {
     const selection = window.getSelection();
-    if (selection.type !== "Range") {
+    if (selection && selection.type !== "Range") {
       const inputs = document.querySelectorAll("input");
       const latestInput = inputs[inputs.length - 1] as HTMLInputElement;
       latestInput.focus();
@@ -55,7 +47,7 @@ class App extends React.Component<{}, State> {
         <Main>
           <Terminal
             commands={this.state.commands}
-            onExec={this.onExec}
+            onCall={this.onCall}
             onClear={this.onClear}
           />
         </Main>

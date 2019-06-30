@@ -1,30 +1,27 @@
-import { CommandSet, Executable } from "./Command";
+import { CommandSet, Callable } from "./Command";
 
 /* tslint:disable:no-console */
 class ConsoleApp {
   start() {
     console.log("%cWelcome to MUNKY.WORK site.", "font-weight: bold;");
     console.log("Enter commands:");
-    CommandSet.instance.allNames().forEach(name => {
-      const command = CommandSet.instance.find(name)!;
+    CommandSet.allNames().forEach(name => {
+      const command = CommandSet.find(name)!;
       if (window[name]) {
         console.log(`'${name}' is already assigned`);
         return;
       }
-      let result: Executable = command.exec([]);
+      let result: Callable = command.call([]);
       if (typeof result !== "string") {
         result = this.extractText(result as JSX.Element);
       }
       window[command.name] = result;
     });
-    console.log(
-      `%c${CommandSet.instance.allNames().join(", ")}`,
-      "color: #666;"
-    );
+    console.log(`%c${CommandSet.allNames().join(", ")}`, "color: #666;");
   }
 
   extractText(elem: JSX.Element): String {
-    if (!elem.props) {
+    if (!elem || !elem.props) {
       return "";
     }
     if (Array.isArray(elem.props.children)) {
@@ -47,9 +44,7 @@ class ConsoleApp {
       return elem.props.children;
     }
     if (elem.props.children.type === "a") {
-      return `${elem.props.children.props.children}: ${
-        elem.props.children.props.href
-      }`;
+      return `${elem.props.children.props.children}: ${elem.props.children.props.href}`;
     }
     if (elem.props.children.type === "p") {
       return `${elem.props.children.props.children}`;
