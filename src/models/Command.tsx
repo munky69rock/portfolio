@@ -110,6 +110,12 @@ CommandSet.addAll([
             })}{" "}
             etc...
           </PlainText>
+          <PlainText>
+            <b>CONTACT</b>
+          </PlainText>
+          <PlainText indent={1}>
+            <a href={`mailto:${Profile.contact}`}>{Profile.contact}</a>
+          </PlainText>
         </div>
       );
     }
@@ -121,8 +127,8 @@ CommandSet.addAll([
       if (args.length === 0 || normalizePath(path) === ".") {
         return (
           <div>
-            <PlainText>{Links.values().map(l => l.toHTMLAnchor())}</PlainText>
             <PlainText>
+              {Links.values().map(l => l.toHTMLAnchor())}
               {FakeFiles.values().map((f, i) => (
                 <span style={{ marginRight: "8px" }} key={i}>
                   {f.name}
@@ -220,12 +226,6 @@ class UserInput {
   }
 }
 
-const defaultCommands = [
-  "whoami",
-  "ls",
-  "cat ./works.txt",
-  "cat ./contact.txt",
-  "welcome"
-];
+const defaultCommands = ["whoami", "ls", "cat ./works.txt", "welcome"];
 
 export { ICommand, UserInput, CommandSet, Callable, defaultCommands };

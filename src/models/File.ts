@@ -38,10 +38,6 @@ FakeFiles.addAll([
       "https://mnist.munky.work",
       "https://ethereum-cv.munky.work"
     ].join("\n")
-  },
-  {
-    name: "contact.txt",
-    content: "munky69rock@gmail.com"
   }
 ]);
 
