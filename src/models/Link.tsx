@@ -14,10 +14,12 @@ class Link {
     this.href = href;
   }
 
-  toHTMLAnchor(): React.ReactElement<HTMLAnchorElement> {
+  toHTMLAnchor(
+    key?: string | number | undefined
+  ): React.ReactElement<HTMLAnchorElement> {
     return (
-      <a href={this.href} target="_blank">
-        {this.title}/
+      <a href={this.href} target="_blank" key={key}>
+        {`${this.title}/`}
       </a>
     );
   }

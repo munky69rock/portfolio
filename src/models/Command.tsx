@@ -3,7 +3,7 @@ import { Profile } from "./Profile";
 import { Links } from "./Link";
 import { FakeFiles } from "./File";
 
-type Callable = null | String | JSX.Element;
+type Callable = null | string | JSX.Element;
 
 interface ICommand {
   name: string;
@@ -92,7 +92,7 @@ CommandSet.addAll([
             ) : null}
           </PlainText>
           <PlainText indent={1}>
-            ({Profile.positions.join(", ")} etc...)
+            {`(${Profile.positions.join(", ")} etc...)`}
           </PlainText>
           <PlainText>
             <b>SKILLS</b>
@@ -102,8 +102,7 @@ CommandSet.addAll([
               const isLast = i !== Profile.skills.length - 1;
               return (
                 <React.Fragment key={i}>
-                  {skill}
-                  {isLast ? ", " : ""}
+                  {`${skill}${isLast ? ", " : ""}`}
                   {i === 6 ? <br /> : null}
                 </React.Fragment>
               );
@@ -128,7 +127,7 @@ CommandSet.addAll([
         return (
           <div>
             <PlainText>
-              {Links.values().map(l => l.toHTMLAnchor())}
+              {Links.values().map((l, i) => l.toHTMLAnchor(i))}
               {FakeFiles.values().map((f, i) => (
                 <span style={{ marginRight: "8px" }} key={i}>
                   {f.name}

@@ -15,39 +15,32 @@ class ConsoleApp {
       if (typeof result !== "string") {
         result = this.extractText(result as JSX.Element);
       }
-      window[command.name] = result;
+      window[command.name] = (...args: string[]) =>
+        this.extractText(command.call(args));
     });
     console.log(`%c${CommandSet.allNames().join(", ")}`, "color: #666;");
   }
 
-  extractText(elem: JSX.Element): String {
-    if (!elem || !elem.props) {
+  extractText(elem: Callable): string {
+    if (typeof elem === "string") {
+      return elem;
+    }
+    if (!elem) {
+      return "";
+    }
+    if (Array.isArray(elem)) {
+      return elem.map(e => this.extractText(e)).join("\n");
+    }
+    if (!elem.props || elem.type === "br") {
       return "";
     }
     if (Array.isArray(elem.props.children)) {
       return elem.props.children
-        .map((child: JSX.Element) => {
-          return this.extractText(child);
-        })
+        .map((child: JSX.Element) => this.extractText(child))
         .join("\n");
-    }
-    if (elem.type === "br") {
-      return "";
     }
     if (elem.type === "a") {
       return `${elem.props.children}: ${elem.props.href}`;
-    }
-    if (elem.type === "p") {
-      return `${elem.props.children}`;
-    }
-    if (typeof elem.props.children === "string") {
-      return elem.props.children;
-    }
-    if (elem.props.children.type === "a") {
-      return `${elem.props.children.props.children}: ${elem.props.children.props.href}`;
-    }
-    if (elem.props.children.type === "p") {
-      return `${elem.props.children.props.children}`;
     }
     return this.extractText(elem.props.children);
   }
