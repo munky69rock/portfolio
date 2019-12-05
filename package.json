@@ -15,7 +15,7 @@
     "@types/react-dom": "^16.0.4",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^10.1.0",
-    "stylelint-config-prettier": "^5.2.0",
+    "stylelint-config-prettier": "^8.0.0",
     "stylelint-config-standard": "^18.3.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
