@@ -35,6 +35,7 @@ FakeFiles.addAll([
     name: "works.txt",
     content: [
       "https://munky.work",
+      "https://slide.munky.work",
       "https://mnist.munky.work",
       "https://ethereum-cv.munky.work"
     ].join("\n")
